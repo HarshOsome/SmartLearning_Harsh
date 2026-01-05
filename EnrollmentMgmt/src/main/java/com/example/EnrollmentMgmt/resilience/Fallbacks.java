@@ -1,0 +1,19 @@
+
+package com.example.EnrollmentMgmt.resilience;
+
+import com.example.EnrollmentMgmt.client.CourseDto;
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
+public class Fallbacks {
+    public static CourseDto degradeCourse(Long courseId, Throwable ex) {
+        CourseDto dto = new CourseDto();
+        dto.setId(courseId);
+        dto.setTitle("Course temporarily unavailable");
+        dto.setDescription("Upstream Course Service is currently unreachable");
+        dto.setStatus("UNKNOWN");
+        dto.setEstimatedHours(0);       // sentinel for unknown
+        dto.setInstructorUserId(null);
+        return dto;
+    }
+}

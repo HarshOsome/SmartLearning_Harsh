@@ -1,0 +1,35 @@
+spring.application.name=EnrollmentMgmt
+spring.datasource.driver-class-name = org.postgresql.Driver
+spring.datasource.url = jdbc:postgresql://localhost:5432/BaccaBucci
+spring.datasource.username = postgres
+spring.datasource.password = Harsh@11
+ 
+server.port=4445
+spring.jpa.hibernate.ddl-auto = update
+spring.jpa.show-sql =true
+spring.jpa.properties.hibernate.format_sql=true
+
+
+# Feign logging (optional)
+#logging.level.org.springframework.cloud.openfeign=INFO
+#logging.level.feign=INF
+
+
+logging.level.org.springframework.cloud.openfeign=DEBUG
+logging.level.feign=DEBUG
+logging.level.com.example.EnrollmentMgmt.client=DEBUG
+logging.level.org.springframework.web=INFO
+
+
+
+spring.cloud.openfeign.client.config.course-service.connect-timeout=1000
+spring.cloud.openfeign.client.config.course-service.read-timeout=1500
+spring.cloud.openfeign.client.config.course-service.logger-level=BASIC
+
+
+spring.cloud.openfeign.client.config.user-service.connect-timeout=1000
+spring.cloud.openfeign.client.config.user-service.read-timeout=1500
+spring.cloud.openfeign.client.config.user-service.logger-level=BASIC
+
+
+

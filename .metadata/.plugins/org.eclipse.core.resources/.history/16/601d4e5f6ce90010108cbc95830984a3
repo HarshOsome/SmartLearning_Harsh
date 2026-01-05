@@ -1,0 +1,24 @@
+package com.example.EnrollmentMgmt.service;
+
+import org.springframework.stereotype.Service;
+
+import com.example.EnrollmentMgmt.client.CourseClient;
+import com.example.EnrollmentMgmt.client.CourseDto;
+import com.example.EnrollmentMgmt.resilience.Fallbacks;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class CourseFacade {
+	private final CourseClient courseClient;
+	
+	@CircuitBreaker(name ="CourseService", fallbackMethod ="getCourseFallback")
+	protected CourseDto getCourseResilent(Long courseId) {
+		return courseClient.getCourse(courseId);
+	}
+	protected CourseDto getCourseFallback(Long courseId, Throwable ex) {
+		return Fallbacks.degradeCourse(courseId, ex);
+	}
+}

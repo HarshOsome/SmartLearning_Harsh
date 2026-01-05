@@ -1,0 +1,47 @@
+spring.application.name=EnrollmentMgmt
+spring.datasource.driver-class-name = org.postgresql.Driver
+spring.datasource.url = jdbc:postgresql://localhost:5432/BaccaBucci
+spring.datasource.username = postgres
+spring.datasource.password = Harsh@11
+ 
+server.port=4445
+spring.jpa.hibernate.ddl-auto = update
+spring.jpa.show-sql =true
+spring.jpa.properties.hibernate.format_sql=true
+
+
+logging.level.org.springframework.cloud.openfeign=DEBUG
+logging.level.feign=DEBUG
+logging.level.com.example.EnrollmentMgmt.client=DEBUG
+logging.level.org.springframework.web=INFO
+
+
+
+spring.cloud.openfeign.client.config.course-service.connect-timeout=1000
+spring.cloud.openfeign.client.config.course-service.read-timeout=1500
+spring.cloud.openfeign.client.config.course-service.logger-level=BASIC
+
+
+spring.cloud.openfeign.client.config.user-service.connect-timeout=1000
+spring.cloud.openfeign.client.config.user-service.read-timeout=1500
+spring.cloud.openfeign.client.config.user-service.logger-level=BASIC
+
+
+resilience4j.circuitbreaker.instances.course-service.register-health-indicator=true
+resilience4j.circuitbreaker.instances.course-service.sliding-window-type=COUNT_BASED
+resilience4j.circuitbreaker.instances.course-service.sliding-window-size=20
+resilience4j.circuitbreaker.instances.course-service.minimum-number-of-calls=10
+resilience4j.circuitbreaker.instances.course-service.failure-rate-threshold=50
+resilience4j.circuitbreaker.instances.course-service.wait-duration-in-open-state=10s
+resilience4j.circuitbreaker.instances.course-service.permitted-number-of-calls-in-half-open-state=5
+resilience4j.circuitbreaker.instances.course-service.automatic-transition-from-open-to-half-open-enabled=true
+
+
+
+
+
+
+
+
+
+

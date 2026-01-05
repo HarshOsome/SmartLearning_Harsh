@@ -11,5 +11,4 @@ public class EnrollmentMgmtApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EnrollmentMgmtApplication.class, args);
 	}
-
 }

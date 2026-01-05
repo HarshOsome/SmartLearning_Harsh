@@ -1,0 +1,16 @@
+package com.example.EnrollmentMgmt.controller;
+
+import java.util.Map;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/fallback")
+public class FallbackController {
+	@GetMapping("/course")
+	public Map<String, Object> courseFallback() {
+		return Map.of("message", "Course service is temporarily unavailable", "fallback", true);
+	}
+}

@@ -1,0 +1,10 @@
+
+package com.example.EnrollmentMgmt.exception;
+
+public class UpstreamUnavailableException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
+
+    public UpstreamUnavailableException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}

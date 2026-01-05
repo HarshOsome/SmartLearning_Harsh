@@ -1,0 +1,59 @@
+spring.application.name=ApiGateway
+
+
+server:
+  port: 4450
+
+spring:
+  cloud:
+    openfeign:
+      client:
+        config:
+          course-service:              # matches @FeignClient(name="course-service")
+            connectTimeout: 1000       # 1s
+            readTimeout: 1500          # 1.5s
+          user-service:
+            connectTimeout: 1000
+            readTimeout: 1500
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      courseService:                   # referenced by @CircuitBreaker(name="courseService")
+        registerHealthIndicator: true
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 20
+        minimumNumberOfCalls: 10
+        failureRateThreshold: 50        # open if >=50% failed
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        recordExceptions:
+          - feign.RetryableException
+          - feign.FeignException
+          - java.net.ConnectException
+          - java.net.SocketTimeoutException
+  timelimiter:
+    instances:
+      courseService:
+        timeoutDuration: 2s
+        cancelRunningFuture: true
+  retry:
+    instances:
+      courseService:
+        maxAttempts: 3
+        waitDuration: 200ms
+        retryExceptions:
+          - feign.RetryableException
+          - java.net.SocketTimeoutException
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus
+logging:
+  level:
+    org.springframework.cloud.openfeign: DEBUG
+    feign: DEBUG
+    com.example.EnrollmentMgmt.client: DEBUG

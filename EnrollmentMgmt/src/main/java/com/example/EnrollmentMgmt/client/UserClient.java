@@ -13,5 +13,5 @@ public interface UserClient {
     @GetMapping("/{id}")
     UserDto getUser(@PathVariable("id") Long id);
 
-    // You can add more endpoints if needed (e.g., minimal summary endpoint)
+    // You can add more end points if needed (e.g., minimal summary endpoint)
 }

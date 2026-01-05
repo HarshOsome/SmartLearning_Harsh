@@ -1,0 +1,5 @@
+package com.example.EnrollmentMgmt.exception;
+
+public class UpstreamUnavailableException {
+
+}

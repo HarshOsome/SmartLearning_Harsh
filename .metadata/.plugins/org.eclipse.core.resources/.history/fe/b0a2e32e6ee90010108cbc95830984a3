@@ -1,0 +1,9 @@
+
+// exception/UpstreamUnavailableException.java
+package com.example.EnrollmentMgmt.exception;
+
+public class UpstreamUnavailableException extends RuntimeException {
+    public UpstreamUnavailableException(String msg, Throwable cause) {
+        super(msg, cause);
+    }
+}

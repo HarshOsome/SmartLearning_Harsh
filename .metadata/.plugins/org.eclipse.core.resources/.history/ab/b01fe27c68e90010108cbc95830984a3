@@ -1,0 +1,5 @@
+package com.example.EnrollmentMgmt.service;
+
+public class CourseFacade {
+
+}
