@@ -2,8 +2,16 @@
 <section name="Workbench">
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<section name="java.lang.Class">
-		<item key="replaceBarOpen" value="false"/>
+		<item key="replaceBarOpen" value="true"/>
 		<list key="findhistory">
+			<item value="gate"/>
+			<item value="tr"/>
+			<item value="clou"/>
+			<item value="open"/>
+			<item value="eu"/>
+			<item value="eur"/>
+			<item value="junit"/>
+			<item value="test"/>
 			<item value="lom"/>
 		</list>
 	</section>
