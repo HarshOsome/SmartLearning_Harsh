@@ -1,0 +1,5 @@
+package com.example.ApiGateway.controller;
+
+public class FallbackController {
+
+}

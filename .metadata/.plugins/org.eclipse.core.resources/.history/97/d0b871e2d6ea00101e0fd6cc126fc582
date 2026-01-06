@@ -1,0 +1,48 @@
+
+spring.application.name=ApiGateway
+server.port=4447
+
+# --- Routes: map edge paths to your services ---
+# Enrollment service ( service on 4445)
+spring.cloud.gateway.server.webflux.routes[0].id=enrollment-service
+spring.cloud.gateway.server.webflux.routes[0].uri=http://localhost:4445
+spring.cloud.gateway.server.webflux.routes[0].predicates[0]=Path=/api/enrollments/**
+
+# Course service (service on 4446)
+spring.cloud.gateway.server.webflux.routes[1].id=course-service
+spring.cloud.gateway.server.webflux.routes[1].uri=http://localhost:4446
+spring.cloud.gateway.server.webflux.routes[1].predicates[0]=Path=/api/courses/**
+# Apply CircuitBreaker on this route with a local fallback
+spring.cloud.gateway.server.webflux.routes[1].filters[0].name=CircuitBreaker
+spring.cloud.gateway.server.webflux.routes[1].filters[0].args.name=courseServiceGateway
+spring.cloud.gateway.server.webflux.routes[1].filters[0].args.fallbackUri=forward:/fallback/course
+
+# User service (example; adjust to your port)
+spring.cloud.gateway.server.webflux.routes[2].id=user-service
+spring.cloud.gateway.server.webflux.routes[2].uri=http://localhost:4444
+spring.cloud.gateway.server.webflux.routes[2].predicates[0]=Path=/api/users/**
+
+# --- Global filters (optional) ---
+spring.cloud.gateway.server.webflux.default-filters[0].name=PreserveHostHeader
+
+# --- CORS (optional) ---
+spring.cloud.gateway.server.webflux.globalcors.corsConfigurations.[/**].allowedOrigins[0]=http://localhost:3000
+spring.cloud.gateway.server.webflux.globalcors.corsConfigurations.[/**].allowedMethods[0]=GET
+spring.cloud.gateway.server.webflux.globalcors.corsConfigurations.[/**].allowedMethods[1]=POST
+spring.cloud.gateway.server.webflux.globalcors.corsConfigurations.[/**].allowedMethods[2]=PATCH
+spring.cloud.gateway.server.webflux.globalcors.corsConfigurations.[/**].allowedHeaders[0]=*
+spring.cloud.gateway.server.webflux.globalcors.corsConfigurations.[/**].allowCredentials=true
+
+# --- Optional retry on specific status codes ---
+spring.cloud.gateway.server.webflux.routes[1].filters[1].name=Retry
+spring.cloud.gateway.server.webflux.routes[1].filters[1].args.retries=2
+spring.cloud.gateway.server.webflux.routes[1].filters[1].args.series[0]=SERVER_ERROR
+spring.cloud.gateway.server.webflux.routes[1].filters[1].args.methods[0]=GET
+
+# --- Trusted proxies / forwarded headers (2025.x behavior) ---
+# Only trust forwarded headers from your local reverse proxies (example)
+spring.cloud.gateway.server.webflux.trusted-proxies=127\\.0\\.0\\.1|10\\.0\\.0\\.\\d+
+
+# --- Logging ---
+logging.level.org.springframework.cloud.gateway=INFO
+logging.level.org.springframework.web.reactive.function.client=INFO

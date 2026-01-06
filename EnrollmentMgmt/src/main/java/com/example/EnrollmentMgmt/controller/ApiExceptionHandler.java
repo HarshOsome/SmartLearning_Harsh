@@ -11,9 +11,9 @@ import com.example.EnrollmentMgmt.exception.UpstreamUnavailableException;
 public class ApiExceptionHandler {
 
     @ExceptionHandler(UpstreamUnavailableException.class)
-    @ResponseStatus(HttpStatus.BAD_GATEWAY)
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
     public Map<String, String> upstream(UpstreamUnavailableException ex) {
-        return Map.of("error", ex.getMessage());
+        return Map.of("ERROR !!!", ex.getMessage());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

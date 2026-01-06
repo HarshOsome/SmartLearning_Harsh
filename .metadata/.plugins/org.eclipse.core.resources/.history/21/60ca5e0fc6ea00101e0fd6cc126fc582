@@ -1,0 +1,33 @@
+
+spring:
+  application:
+    name: ApiGateway
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/users/**
+        - id: course-service
+          uri: http://localhost:4446
+          predicates:
+            - Path=/api/courses/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: courseServiceGateway
+                fallbackUri: forward:/fallback/course
+        - id: enrollment-service
+          uri: http://localhost:4445
+          predicates:
+            - Path=/api/enrollments/**
+      default-filters:
+        - PreserveHostHeader
+
+server:
+  port: 4447
+
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO
